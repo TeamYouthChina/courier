@@ -1,23 +1,21 @@
 version: '3'
 services:
-  activemq:
-    image: webcenter/activemq:latest
-    container_name: youthchina-activemq
-    networks:
-      backend:
-        ipv4_address: 172.29.1.1
-    ports:
-      - 8161:8161
-      - 61616:61616
-      - 61613:61613
+  rabbitmq:
+    image: rabbitmq:3.7-management
+    container_name: rabbitmq
+    hostname: rabbitmq
     volumes:
-      - /data/activemq:/data
-      - /var/log/activemq:/var/log/activemq
+      - rabbitmqdata:/var/lib/rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
     environment:
-      ACTIVEMQ_ADMIN_LOGIN: root
-      ACTIVEMQ_ADMIN_PASSWORD: rootpass
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmqpass
 networks:
   backend:
     ipam:
       config:
         - subnet: 172.29.0.0/16
+volumes:
+  rabbitmqdata:
