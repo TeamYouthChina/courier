@@ -1,0 +1,21 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3.7-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmqpass
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 172.29.0.0/16
+volumes:
+  rabbitmqdata:
