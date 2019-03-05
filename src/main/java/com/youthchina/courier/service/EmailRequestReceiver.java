@@ -1,13 +1,14 @@
 package com.youthchina.courier.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.youthchina.courier.DTO.EmailDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,12 +29,11 @@ public class EmailRequestReceiver {
             ObjectMapper mapper = new ObjectMapper();
             EmailDTO emailDTO = mapper.readValue(message, EmailDTO.class);
             Map<String,Object> valueMap=new HashMap<>();
-            String UPLOAD_FOLDER="/Users/wangqinghong/Desktop/";
-            writeBytesToFile(emailDTO.getBytes(), UPLOAD_FOLDER + "resume.pdf");
+            String UPLOAD_FOLDER="/Users/dreamer/Desktop/";
+            File file=writeBytesToFile(emailDTO.getBytes(), UPLOAD_FOLDER + "resume.pdf");
             valueMap.put("to",emailDTO.getCompany_email());
             valueMap.put("id",emailDTO.getUser_id());
-            String filePath = "/Users/wangqinghong/Desktop/resume.pdf";
-            mailService.sendAttachmentsMail("hmgswqh@gmail.com", "test attachment mail", "hello this is a attachment mail", filePath);
+            mailService.sendResumeEmail(valueMap,file);
 
 
         }catch (Exception e){
@@ -44,25 +44,28 @@ public class EmailRequestReceiver {
 
 
     }
-    private static void writeBytesToFile(byte[] bFile, String fileDest) {
-
-        FileOutputStream fileOuputStream = null;
-
+    private static File writeBytesToFile(byte[] b, String outputFile) {
+        File ret = null;
+        BufferedOutputStream stream = null;
         try {
-            fileOuputStream = new FileOutputStream(fileDest);
-            fileOuputStream.write(bFile);
-
-        } catch (IOException e) {
+            ret = new File(outputFile);
+            FileOutputStream fstream = new FileOutputStream(ret);
+            stream = new BufferedOutputStream(fstream);
+            stream.write(b);
+        } catch (Exception e) {
+            // log.error("helper:get file from byte process error!");
             e.printStackTrace();
         } finally {
-            if (fileOuputStream != null) {
+            if (stream != null) {
                 try {
-                    fileOuputStream.close();
+                    stream.close();
                 } catch (IOException e) {
+                    // log.error("helper:get file from byte process error!");
                     e.printStackTrace();
                 }
             }
         }
+        return ret;
 
     }
 }

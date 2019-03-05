@@ -15,7 +15,7 @@ public class CourierApplicationTests {
     MessageSender messageSender;
     @Test
     public void contextLoads() {
-        messageSender.send("abcdefg");
+
     }
 
 }

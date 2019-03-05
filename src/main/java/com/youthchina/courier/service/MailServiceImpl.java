@@ -10,10 +10,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
@@ -33,7 +33,7 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @Autowired
+    @Resource
     private TemplateEngine templateEngine;
 
     @Value("hmgswqh@gmail.com")
@@ -134,16 +134,23 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendResumeEmail(Map<String, Object> valueMap, MultipartFile file) {
+    public void sendResumeEmail(Map<String, Object> valueMap,File file) {
         MimeMessage message=javaMailSender.createMimeMessage();
         try{
             MimeMessageHelper helper=new MimeMessageHelper(message,true);
             helper.setFrom(from);
+
             helper.setTo(valueMap.get("to").toString());
-            helper.setSubject(valueMap.get("subject").toString());
+
+            helper.setSubject("apply job");
+
             helper.setText("hi",true);
             String fileName=file.getName();
             helper.addAttachment(fileName,file);
+            Context context=new Context();
+            context.setVariables(valueMap);
+            String content=templateEngine.process("registerEmail",context);
+            helper.setText(content,true);
             logger.info("带附件的邮件已发送");
             javaMailSender.send(message);
         }catch(MessagingException e){
