@@ -25,7 +25,6 @@ public class MessageSender implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Sending message...");
         rabbitTemplate.convertAndSend("hello", "Hello from RabbitMQ!");
-        receiver.getLatch().await(10, TimeUnit.SECONDS);
     }
 
 }
