@@ -2,6 +2,7 @@ package com.youthchina.courier.service;
 
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,10 +10,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RabbitListener(queues = "hello")
-public class EmailRequestReceiver {
+public class EmailRequestReceiver extends MessageListenerAdapter {
 
-    @RabbitHandler
-    public void onReceived(String message) {
-
+    @RabbitHandler(isDefault = true)
+    public void onReceived(String m){
+        System.out.println(m);
     }
+
 }
