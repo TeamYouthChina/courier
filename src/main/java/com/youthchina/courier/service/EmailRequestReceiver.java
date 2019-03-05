@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * Created by zhongyangwu on 2/21/19.
  */
 @Component
-@RabbitListener(queues = "hello")
+@RabbitListener(queues = "email")
 public class EmailRequestReceiver {
 
     @RabbitHandler
