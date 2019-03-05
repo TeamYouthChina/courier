@@ -13,6 +13,6 @@ public class EmailRequestReceiver {
 
     @RabbitHandler
     public void onReceived(String message) {
-
+        System.out.println(message);
     }
 }
