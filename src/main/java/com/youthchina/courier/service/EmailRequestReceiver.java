@@ -29,7 +29,7 @@ public class EmailRequestReceiver {
             ObjectMapper mapper = new ObjectMapper();
             EmailDTO emailDTO = mapper.readValue(message, EmailDTO.class);
             Map<String,Object> valueMap=new HashMap<>();
-            String UPLOAD_FOLDER="/Users/dreamer/Desktop/";
+            String UPLOAD_FOLDER="/root/backend/courier/static/";
             File file=writeBytesToFile(emailDTO.getBytes(), UPLOAD_FOLDER + "resume.pdf");
             valueMap.put("to",emailDTO.getCompany_email());
             valueMap.put("id",emailDTO.getUser_id());
