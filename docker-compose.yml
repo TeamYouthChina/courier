@@ -12,6 +12,17 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=rabbitmq
       - RABBITMQ_DEFAULT_PASS=rabbitmqpass
+  courier:
+    image: youthchina:courier
+    container_name: youthchina-courier
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      backend:
+        ipv4_address: 172.29.1.2
+    volumes:
+      - backenddata:/app/static
 networks:
   backend:
     ipam:
@@ -19,3 +30,4 @@ networks:
         - subnet: 172.29.0.0/16
 volumes:
   rabbitmqdata:
+  backenddata:
