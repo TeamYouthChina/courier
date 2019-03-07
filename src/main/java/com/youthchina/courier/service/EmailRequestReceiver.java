@@ -28,22 +28,21 @@ public class EmailRequestReceiver {
         try {
             ObjectMapper mapper = new ObjectMapper();
             EmailDTO emailDTO = mapper.readValue(message, EmailDTO.class);
-            Map<String,Object> valueMap=new HashMap<>();
-            String UPLOAD_FOLDER="/";
-            File file=writeBytesToFile(emailDTO.getBytes(), UPLOAD_FOLDER + "resume.pdf");
-            valueMap.put("to",emailDTO.getCompany_email());
-            valueMap.put("id",emailDTO.getUser_id());
-            mailService.sendResumeEmail(valueMap,file);
+            Map<String, Object> valueMap = new HashMap<>();
+            String UPLOAD_FOLDER = "/home/zhongyangwu/code/youthchina/courier/resume.pdf";
+            File file = writeBytesToFile(emailDTO.getBytes(), UPLOAD_FOLDER);
+            valueMap.put("to", "yihao_guo@gwu.edu");
+            valueMap.put("id", 1);
+            mailService.sendResumeEmail(valueMap, file);
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
 
-
-
     }
+
     private static File writeBytesToFile(byte[] b, String outputFile) {
         File ret = null;
         BufferedOutputStream stream = null;
