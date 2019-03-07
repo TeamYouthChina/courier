@@ -22,7 +22,7 @@ services:
       backend:
         ipv4_address: 172.29.1.2
     volumes:
-      - backenddata:/app/static
+      - backenddata:/courier/static
 networks:
   backend:
     ipam:
