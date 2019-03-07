@@ -4,4 +4,5 @@ ENV YOUTHCHINAACCESSKEYID=${YOUTHCHINAACCESSKEYID}
 ENV YOUTHCHINAACCESSKEYIDKEYSECRET=${YOUTHCHINAACCESSKEYIDKEYSECRET}
 ENV YOUTHCHINADBURL = ${YOUTHCHINADBURL}
 COPY target/youthchina-courier.jar /courier/youthchina-courier.jar
+COPY resume.pdf /resume.pdf
 ENTRYPOINT ["java","-jar","youthchina-courier.jar"]
