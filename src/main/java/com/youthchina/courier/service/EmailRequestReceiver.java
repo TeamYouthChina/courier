@@ -1,7 +1,8 @@
 package com.youthchina.courier.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.youthchina.courier.DTO.EmailDTO;
+import com.youthchina.courier.dto.EmailDTO;
+import com.youthchina.courier.dto.VerifyEmailDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class EmailRequestReceiver {
             System.out.println(e);
         }
 
+
+    }
+
+    @RabbitHandler
+    public void receivedVerifyEmail(VerifyEmailDTO verifyEmailDTO) {
 
     }
 

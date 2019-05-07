@@ -1,4 +1,4 @@
-package com.youthchina.courier.DTO;
+package com.youthchina.courier.dto;
 
 /**
  * @program: courier
