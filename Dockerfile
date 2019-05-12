@@ -5,4 +5,5 @@ ENV YOUTHCHINAACCESSKEYIDKEYSECRET=${YOUTHCHINAACCESSKEYIDKEYSECRET}
 ENV YOUTHCHINADBURL = ${YOUTHCHINADBURL}
 COPY target/youthchina-courier.jar /courier/youthchina-courier.jar
 COPY resume.pdf /resume.pdf
-ENTRYPOINT ["java","-jar","youthchina-courier.jar"]
+COPY application.properties /courier/application.properties
+ENTRYPOINT ["java","-jar","youthchina-courier.jar", "--spring.config.location=classpath:/application.properties"]
