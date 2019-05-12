@@ -36,7 +36,7 @@ public class MailServiceImpl implements MailService {
     @Resource
     private TemplateEngine templateEngine;
 
-    @Value("hmgswqh@gmail.com")
+    @Value("noreply@weyouth.co")
     private String from;
 
     @Override

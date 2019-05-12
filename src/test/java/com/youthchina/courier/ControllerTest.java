@@ -54,21 +54,22 @@
 //        this.mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
 //    }
 //
-////    @Test
-////
-////    public void testRegisterEmail() throws Exception{
-////        UserDTO userDTO=new UserDTO();
-////        userDTO.setEmail("hmgswqh@gmail.com");
-////        userDTO.setUsername("hmgswqh");
-////        ObjectMapper mapper = new ObjectMapper();
-////        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-////        String requestJson = ow.writeValueAsString(userDTO);
-////        this.mvc.perform(MockMvcRequestBuilders.post("/registerEmail").contentType(MediaType.APPLICATION_JSON).content(requestJson).with(authGenerator.authentication())
-////                ).andDo(print());
-//////        System.out.print(s);
-////
-////    }
+//    @Test
 //
+//    public void testRegisterEmail() throws Exception {
+//        UserDTO userDTO = new UserDTO();
+//        userDTO.setEmail("hmgswqh@gmail.com");
+//        userDTO.setUsername("hmgswqh");
+//        ObjectMapper mapper = new ObjectMapper();
+//        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+//        String requestJson = ow.writeValueAsString(userDTO);
+//        this.mvc.perform(MockMvcRequestBuilders.post("/registerEmail").contentType(MediaType.APPLICATION_JSON).content(requestJson).with(authGenerator.authentication())
+//        ).andDo(print());
+////        System.out.print(s);
+//
+//    }
+//}
+////
 //    @Test
 //    public void testResumeEmail() throws Exception{
 //        File file = new File("/Users/wangqinghong/Desktop/YouthChina resume/resume.pdf");
