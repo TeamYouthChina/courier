@@ -18,8 +18,8 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = {"classpath:application.properties"})
 public class RabbitConfig {
     @Bean
-    public Queue hello() {
-        return new Queue("hello", true);
+    public Queue email() {
+        return new Queue("email", true);
     }
 
     @Bean
