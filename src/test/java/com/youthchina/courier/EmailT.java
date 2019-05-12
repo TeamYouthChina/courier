@@ -32,7 +32,9 @@ public class EmailT {
         Map<String, Object> valueMap = new HashMap<>();
         valueMap.put("to", "hmgswqh@gmail.com");
         valueMap.put("subject", "注册邮箱");
-        valueMap.put("username", "hmgswqh");
+        valueMap.put("firstname", "王");
+        valueMap.put("lastname","清弘");
+        valueMap.put("address","http://localhost:8080/api/v1/applicants/register/verify/email?token=");
         mailService.sendUserRegisterEmail(valueMap);
 
     }
