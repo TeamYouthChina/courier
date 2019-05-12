@@ -3,8 +3,8 @@ package com.youthchina.courier.dto;
 /**
  * Created by zhongyangwu on 5/6/19.
  */
-public class VerifyEmailDTO {
-    private String mailto;
+public class VerifyEmailDTO{
+    private String mailTo;
     private String firstName;
     private String lastName;
     private String code;
@@ -34,6 +34,15 @@ public class VerifyEmailDTO {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+
+    public String getMailTo() {
+        return mailTo;
+    }
+
+    public void setMailTo(String mailTo) {
+        this.mailTo = mailTo;
     }
 }
 

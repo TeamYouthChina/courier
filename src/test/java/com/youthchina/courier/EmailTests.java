@@ -30,7 +30,7 @@ public class EmailTests {
         System.out.println("123123213");
         com.youthchina.courier.domain.MailResult mailResult = new com.youthchina.courier.domain.MailResult();
         Map<String, Object> valueMap = new HashMap<>();
-        valueMap.put("to", "hmgswqh@gmail.com");
+        valueMap.put("to", "zhongyang.wu@outlook.com");
         valueMap.put("subject", "注册邮箱");
         valueMap.put("username", "hmgswqh");
         mailService.sendUserRegisterEmail(valueMap);

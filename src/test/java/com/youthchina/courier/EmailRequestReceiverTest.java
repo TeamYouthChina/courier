@@ -23,12 +23,12 @@ public class EmailRequestReceiverTest {
     }
 }
 
-@Component
-@RabbitListener(queues = "email")
-class EmailRequestTestReceiver {
-
-    @RabbitHandler
-    public void handleVerifyEmailDTO(VerifyEmailDTO verifyEmailDTO) {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!===============================" + verifyEmailDTO.getCode());
-    }
-}
+//@Component
+//@RabbitListener(queues = "email")
+//class EmailRequestTestReceiver {
+//
+//    @RabbitHandler
+//    public void handleVerifyEmailDTO(VerifyEmailDTO verifyEmailDTO) {
+//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!===============================" + verifyEmailDTO.getCode());
+//    }
+//}

@@ -36,7 +36,7 @@ public class MailServiceImpl implements MailService {
     @Resource
     private TemplateEngine templateEngine;
 
-    @Value("hmgswqh@gmail.com")
+    @Value("noreply@weyouth.co")
     private String from;
 
     @Override
@@ -50,9 +50,9 @@ public class MailServiceImpl implements MailService {
 
         try {
             javaMailSender.send(simpleMailMessage);
-            logger.info("简单邮件已经发送。");
+            System.out.println("简单邮件已经发送。");
         } catch (Exception e) {
-            logger.error("发送简单邮件时发生异常！", e);
+            System.out.println("发送简单邮件时发生异常！");
         }
 
 

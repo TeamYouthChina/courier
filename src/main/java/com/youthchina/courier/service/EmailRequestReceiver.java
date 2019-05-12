@@ -1,7 +1,7 @@
 package com.youthchina.courier.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.youthchina.courier.dto.EmailDTO;
+import com.youthchina.courier.dto.ApplicationEmailDTO;
 import com.youthchina.courier.dto.VerifyEmailDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -28,7 +28,7 @@ public class EmailRequestReceiver {
     public void onReceived(String message) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            EmailDTO emailDTO = mapper.readValue(message, EmailDTO.class);
+            ApplicationEmailDTO emailDTO = mapper.readValue(message, ApplicationEmailDTO.class);
             Map<String, Object> valueMap = new HashMap<>();
             String UPLOAD_FOLDER = "/home/zhongyangwu/code/youthchina/courier/resume.pdf";
             File file = writeBytesToFile(emailDTO.getBytes(), UPLOAD_FOLDER);
@@ -46,7 +46,7 @@ public class EmailRequestReceiver {
 
     @RabbitHandler
     public void receivedVerifyEmail(VerifyEmailDTO verifyEmailDTO) {
-
+        mailService.sendSimpleMail(verifyEmailDTO.getMailTo(), "Register ", "http://localhost:8080/api/v1/applicants/register/verify/email?token=" + verifyEmailDTO.getCode());
     }
 
     private static File writeBytesToFile(byte[] b, String outputFile) {
