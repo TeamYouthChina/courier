@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-尊敬的HR：
-这是 职道 的用户发送 的一条测试简历。
-
+<div th:include="footer.html :: copy"></div>
+<p1 th:text="尊敬的 +${firstname}+${lastname}"></p1>
+<p1 th:text="账号激活地址 +${address}"></p1>
 
 
 

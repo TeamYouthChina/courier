@@ -46,7 +46,13 @@ public class EmailRequestReceiver {
 
     @RabbitHandler
     public void receivedVerifyEmail(VerifyEmailDTO verifyEmailDTO) {
-        mailService.sendSimpleMail(verifyEmailDTO.getMailTo(), "Register ", "http://localhost:8080/api/v1/applicants/register/verify/email?token=" + verifyEmailDTO.getCode());
+        Map<String,Object> valueMap=new HashMap<>();
+        valueMap.put("to",verifyEmailDTO.getMailTo());
+        valueMap.put("subject","Register");
+        valueMap.put("address","http://localhost:8080/api/v1/applicants/register/verify/email?token="+verifyEmailDTO.getCode());
+        valueMap.put("firstname",verifyEmailDTO.getFirstName());
+        valueMap.put("lastname",verifyEmailDTO.getLastName());
+        mailService.sendUserRegisterEmail(valueMap);
     }
 
     private static File writeBytesToFile(byte[] b, String outputFile) {
