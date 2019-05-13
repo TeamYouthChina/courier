@@ -46,7 +46,7 @@ public class EmailRequestReceiver {
 
     @RabbitHandler
     public void receivedVerifyEmail(VerifyEmailDTO verifyEmailDTO) {
-        mailService.sendSimpleMail(verifyEmailDTO.getMailTo(), "Register ", "http://localhost:8080/api/v1/applicants/register/verify/email?token=" + verifyEmailDTO.getCode());
+        mailService.sendSimpleMail(verifyEmailDTO.getMailTo(), "Register ", "http://47.252.87.218:8080/api/v1/applicants/register/verify/email?token=" + verifyEmailDTO.getCode());
     }
 
     private static File writeBytesToFile(byte[] b, String outputFile) {
