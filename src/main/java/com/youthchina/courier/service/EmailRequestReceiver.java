@@ -2,6 +2,7 @@ package com.youthchina.courier.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youthchina.courier.dto.ApplicationEmailDTO;
+import com.youthchina.courier.dto.EmailSendingDTO;
 import com.youthchina.courier.dto.VerifyEmailDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -34,7 +35,7 @@ public class EmailRequestReceiver {
             File file = writeBytesToFile(emailDTO.getBytes(), UPLOAD_FOLDER);
             valueMap.put("to", "yihao_guo@gwu.edu");
             valueMap.put("id", 1);
-            mailService.sendResumeEmail(valueMap, file);
+//            mailService.sendResumeEmail(valueMap);
 
 
         } catch (Exception e) {
@@ -53,6 +54,14 @@ public class EmailRequestReceiver {
         valueMap.put("firstname",verifyEmailDTO.getFirstName());
         valueMap.put("lastname",verifyEmailDTO.getLastName());
         mailService.sendUserRegisterEmail(valueMap);
+    }
+
+    @RabbitHandler
+    public void sendingJobResume(EmailSendingDTO emailSendingDTO){
+
+        mailService.sendResumeEmail(emailSendingDTO);
+        mailService.sendSimpleMail(emailSendingDTO);
+
     }
 
     private static File writeBytesToFile(byte[] b, String outputFile) {

@@ -5,9 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<p th:text="尊敬的 +${firstname}+${lastname}"></p>
-<p th:text="账号激活地址 +${address}"></p>
+
+<p th:text="尊敬的 +${lastName}+${firstName}"></p>
+<p4 th:text="你已成功申请 +${jobName}"></p4>,<p4 th:text="HR联络方式为 +${hrEmail}"></p4>,请注意来自企业的后续通知.
+
 <div th:include="footer.html :: copy"></div>
+
+
+
 
 
 

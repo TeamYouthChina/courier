@@ -1,5 +1,6 @@
 package com.youthchina.courier;
 
+import com.youthchina.courier.dto.EmailSendingDTO;
 import com.youthchina.courier.service.MailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.web.servlet.htmlunit.UrlRegexRequestMatcher;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +39,34 @@ public class EmailT {
         valueMap.put("lastname","清弘");
         valueMap.put("address","http://localhost:8080/api/v1/applicants/register/verify/email?token=");
         mailService.sendUserRegisterEmail(valueMap);
+
+    }
+    @Test
+    public void testResume() throws Exception{
+        EmailSendingDTO emailSendingDTO=new EmailSendingDTO();
+        emailSendingDTO.setFileName("111");
+        emailSendingDTO.setFirstName("清弘");
+        emailSendingDTO.setLastName("王");
+        URL url = new URL("https://www.bates.edu/purposeful-work/files/2019/03/resume-guide-fy19.pdf");
+        emailSendingDTO.setUrl(url);
+        emailSendingDTO.setJobName("backend");
+        emailSendingDTO.setHrEmail("hmgswqh@gmail.com");
+        emailSendingDTO.setOwnEmail("hmgswqh@gmail.com");
+        mailService.sendResumeEmail(emailSendingDTO);
+    }
+
+    @Test
+    public void testStudentSure() throws Exception{
+        EmailSendingDTO emailSendingDTO=new EmailSendingDTO();
+        emailSendingDTO.setFileName("111");
+        emailSendingDTO.setFirstName("清弘");
+        emailSendingDTO.setLastName("王");
+        URL url = new URL("https://www.bates.edu/purposeful-work/files/2019/03/resume-guide-fy19.pdf");
+        emailSendingDTO.setUrl(url);
+        emailSendingDTO.setJobName("后端开发");
+        emailSendingDTO.setHrEmail("hmgswqh@gmail.com");
+        emailSendingDTO.setOwnEmail("hmgswqh@gmail.com");
+        mailService.sendSimpleMail(emailSendingDTO);
 
     }
 

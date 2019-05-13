@@ -1,5 +1,6 @@
 package com.youthchina.courier.service;
 
+import com.youthchina.courier.dto.EmailSendingDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,17 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.activation.DataHandler;
+import javax.activation.URLDataSource;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
+import javax.mail.Part;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,19 +48,33 @@ public class MailServiceImpl implements MailService {
     private String from;
 
     @Override
-    public void sendSimpleMail(String to, String subject, String content) {
-        SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
-        simpleMailMessage.setFrom(from);
-        simpleMailMessage.setTo(to);
-        simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText(content);
-        System.out.print("111");
+    public void sendSimpleMail(EmailSendingDTO emailSendingDTO) {
+        Map<String,Object> valueMap=new HashMap<>();
+        valueMap.put("to",emailSendingDTO.getHrEmail());
+        valueMap.put("resume",emailSendingDTO.getUrl());
+        valueMap.put("ownEmail",emailSendingDTO.getOwnEmail());
+        valueMap.put("firstName",emailSendingDTO.getFirstName());
+        valueMap.put("lastName",emailSendingDTO.getLastName());
+        valueMap.put("jobName",emailSendingDTO.getJobName());
+        valueMap.put("hrEmail",emailSendingDTO.getHrEmail());
+        MimeMessage message=javaMailSender.createMimeMessage();
+        try{
+            MimeMessageHelper helper=new MimeMessageHelper(message,true);
+            helper.setFrom(from);
 
-        try {
-            javaMailSender.send(simpleMailMessage);
-            System.out.println("简单邮件已经发送。");
-        } catch (Exception e) {
-            System.out.println("发送简单邮件时发生异常！");
+            helper.setTo(valueMap.get("to").toString());
+
+            helper.setSubject("申请确认邮件");
+
+            Context context=new Context();
+            context.setVariables(valueMap);
+            String content=templateEngine.process("studentSure",context);
+            helper.setText(content,true);
+            logger.info("带附件的邮件已发送");
+            javaMailSender.send(message);
+        }catch(MessagingException e){
+            logger.error("发送带附件的邮件时发送异常",e);
+
         }
 
 
@@ -86,6 +108,7 @@ public class MailServiceImpl implements MailService {
             FileSystemResource file=new FileSystemResource(new File(filePath));
             String fileName=file.getFilename();
             helper.addAttachment(fileName,file);
+
             logger.info("带附件的邮件已发送");
             javaMailSender.send(message);
         }catch(MessagingException e){
@@ -134,22 +157,28 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendResumeEmail(Map<String, Object> valueMap,File file) {
+    public void sendResumeEmail(EmailSendingDTO emailSendingDTO) {
+        Map<String,Object> valueMap=new HashMap<>();
+        valueMap.put("to",emailSendingDTO.getHrEmail());
+        valueMap.put("subject",emailSendingDTO.getJobName()+"-"+emailSendingDTO.getLastName()+emailSendingDTO.getFirstName());
+        valueMap.put("resume",emailSendingDTO.getUrl());
+        valueMap.put("ownEmail",emailSendingDTO.getOwnEmail());
         MimeMessage message=javaMailSender.createMimeMessage();
         try{
-            MimeMessageHelper helper=new MimeMessageHelper(message,true);
+                MimeMessageHelper helper=new MimeMessageHelper(message,true);
             helper.setFrom(from);
 
             helper.setTo(valueMap.get("to").toString());
 
-            helper.setSubject("apply job");
+            helper.setSubject(valueMap.get("subject").toString());
 
-            helper.setText("hi",true);
-            String fileName=file.getName();
-            helper.addAttachment(fileName,file);
+
+            helper.addAttachment(emailSendingDTO.getFileName(),new URLDataSource(emailSendingDTO.getUrl()));
+
+
             Context context=new Context();
             context.setVariables(valueMap);
-            String content=templateEngine.process("registerEmail",context);
+            String content=templateEngine.process("emailtemplates",context);
             helper.setText(content,true);
             logger.info("带附件的邮件已发送");
             javaMailSender.send(message);
