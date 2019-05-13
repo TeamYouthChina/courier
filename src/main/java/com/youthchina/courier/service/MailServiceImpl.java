@@ -149,7 +149,7 @@ public class MailServiceImpl implements MailService {
             String content=templateEngine.process("registerEmail",context);
             helper.setText(content,true);
             javaMailSender.send(mimeMessage);
-
+            System.out.println("注册验证邮件已发送");
         }catch (MessagingException e){
             logger.error("发送邮件异常");
         }
